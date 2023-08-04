@@ -29,6 +29,7 @@ COPY handler.py /data/handler.py
 COPY schema.py /data/schema.py
 COPY inference.py /data/inference.py
 COPY __init.py__ /data/__init__.py
+COPY run_config.py /data/run_config.py
 
 
 CMD [ "python", "-m", "handler" ]

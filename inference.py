@@ -1,10 +1,17 @@
-import torch
-from config import repo_name, model_name, model_basename, max_new_tokens, token_repetition_penalty_max, temperature, top_p, top_k, stop_sequence
-from huggingface_hub import snapshot_download
-import logging, os, glob
+from config import model_name, max_new_tokens, token_repetition_penalty_max, temperature, top_p, top_k, stop_sequence
+import os, glob
 from exllama.model import ExLlama, ExLlamaCache, ExLlamaConfig
 from exllama.tokenizer import ExLlamaTokenizer
 from exllama.generator import ExLlamaGenerator
+import glob
+import os
+
+from exllama.generator import ExLlamaGenerator
+from exllama.model import ExLlama, ExLlamaCache, ExLlamaConfig
+from exllama.tokenizer import ExLlamaTokenizer
+
+from config import model_name, max_new_tokens, token_repetition_penalty_max, temperature, top_p, top_k, stop_sequence
+
 
 class Predictor:
     def setup(self):
@@ -13,7 +20,7 @@ class Predictor:
                    
         # snapshot_download(repo_id=repo_name, local_dir=model_directory)
         tokenizer_path = os.path.join(model_directory, "tokenizer.model")
-        model_config_path = os.path.join(model_directory, "config.json")
+        model_config_path = os.path.join(model_directory, "run_config.json")
         st_pattern = os.path.join(model_directory, "*.safetensors")
         model_path = glob.glob(st_pattern)[0]
         
