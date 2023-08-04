@@ -21,12 +21,12 @@ RUN git clone https://github.com/turboderp/exllama
 RUN pip install -r exllama/requirements.txt
 
 COPY download.py /data/download.py
+COPY config.py /data/config.py
 ENV PYTHONPATH=/data/exllama
 RUN python -m download
 
 COPY handler.py /data/handler.py
 COPY schema.py /data/schema.py
-COPY config.py /data/config.py
 COPY inference.py /data/inference.py
 COPY __init.py__ /data/__init__.py
 
