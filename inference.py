@@ -5,7 +5,10 @@ from exllama.generator import ExLlamaGenerator
 from exllama.model import ExLlama, ExLlamaCache, ExLlamaConfig
 from exllama.tokenizer import ExLlamaTokenizer
 
-from config import model_name, max_new_tokens, token_repetition_penalty_max, temperature, top_p, top_k, stop_sequence
+from config import model_name, max_new_tokens, token_repetition_penalty_max, temperature, top_p, top_k
+
+
+stop_sequence = "###"
 
 
 class Predictor:
