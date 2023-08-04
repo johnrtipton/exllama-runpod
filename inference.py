@@ -39,6 +39,7 @@ class Predictor:
         
         print("Creating generator...")
         self.generator = ExLlamaGenerator(self.model, self.tokenizer, self.cache)   # create generator
+
         # Configure generator
         self.generator.disallow_tokens([self.tokenizer.eos_token_id])
 
@@ -46,7 +47,7 @@ class Predictor:
         self.generator.settings.temperature = temperature
         self.generator.settings.top_p = top_p
         self.generator.settings.top_k = top_k
-        self.generator.settings.max_new_tokens = 16384
+        self.generator.settings.max_new_tokens = 2048
         
     def predict(self, prompt):
         
@@ -60,19 +61,21 @@ class Predictor:
         num_res_tokens = ids.shape[-1]  # Decode from here
         self.generator.gen_begin(ids)
         
-        text = ""
         new_text = ""
         
         self.generator.begin_beam_search()
         for i in range(max_new_tokens):
             gen_token = self.generator.beam_search()
             if gen_token.item() == self.tokenizer.eos_token_id:
+                print("EOS found")
                 return new_text
 
             num_res_tokens += 1
             text = self.tokenizer.decode(self.generator.sequence_actual[:, -num_res_tokens:][0])
             new_text = text[len(prompt):]
+            print(new_text)
             if new_text.lower().endswith(stop_sequence.lower()):
+                print("Stop sequence found")
                 return new_text[:-len(stop_sequence)]
 
         return new_text

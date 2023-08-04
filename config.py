@@ -7,4 +7,3 @@ token_repetition_penalty_max = 1.176470
 temperature = 0.01
 top_p = 0
 top_k = 20
-stop_sequence = ""
