@@ -1,8 +1,3 @@
-from config import model_name, max_new_tokens, token_repetition_penalty_max, temperature, top_p, top_k, stop_sequence
-import os, glob
-from exllama.model import ExLlama, ExLlamaCache, ExLlamaConfig
-from exllama.tokenizer import ExLlamaTokenizer
-from exllama.generator import ExLlamaGenerator
 import glob
 import os
 
@@ -20,13 +15,14 @@ class Predictor:
                    
         # snapshot_download(repo_id=repo_name, local_dir=model_directory)
         tokenizer_path = os.path.join(model_directory, "tokenizer.model")
-        model_config_path = os.path.join(model_directory, "run_config.json")
+        model_config_path = os.path.join(model_directory, "config.json")
         st_pattern = os.path.join(model_directory, "*.safetensors")
         model_path = glob.glob(st_pattern)[0]
         
         config = ExLlamaConfig(model_config_path)               # create config from config.json
         config.model_path = model_path                          # supply path to model weights file
-        
+        config.max_input_len = 16384                            # set max input length to 16K tokens
+        config.max_output_len = 16384                           # set max output length to 16K tokens
         
         """Load the model into memory to make running multiple predictions efficient"""
         print("Loading tokenizer...")
@@ -49,6 +45,7 @@ class Predictor:
         self.generator.settings.temperature = temperature
         self.generator.settings.top_p = top_p
         self.generator.settings.top_k = top_k
+        self.generator.settings.max_new_tokens = 16384
         
     def predict(self, prompt):
         
