@@ -8,9 +8,9 @@ docker-build:
 	@docker buildx build --platform=linux/amd64 -t $(IMAGE_NAME) .
 
 docker-login:
-    @echo "Logging into Docker Hub..."
-    @docker login
+	@echo "Logging into Docker Hub..."
+	@docker login
 
 docker-push: docker-login
-    @echo "Pushing Docker image..."
-    @docker push $(IMAGE_NAME)
+	@echo "Pushing Docker image..."
+	@docker push $(IMAGE_NAME)
