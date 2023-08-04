@@ -23,6 +23,7 @@ class Predictor:
         config.model_path = model_path                          # supply path to model weights file
         config.max_input_len = 16384                            # set max input length to 16K tokens
         config.max_output_len = 16384                           # set max output length to 16K tokens
+        config.max_seq_len = 16384                              # set max sequence length to 16K tokens
         
         """Load the model into memory to make running multiple predictions efficient"""
         print("Loading tokenizer...")
